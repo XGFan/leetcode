@@ -25,20 +25,9 @@ fun mergeTwoLists(l1: ListNode?, l2: ListNode?): ListNode? {
 }
 
 fun main() {
-    val a = ListNode(1)
-    listOf(2, 4).map { ListNode(it) }.fold(a) { a, b ->
-        a.next = b
-        a.next!!
-    }
-
-    val b = ListNode(1)
-    listOf(2, 3).map { ListNode(it) }.fold(b) { a, b ->
-        a.next = b
-        a.next!!
-    }
+    val a = arrayOf(1, 2, 4).toListNode()
+    val b = arrayOf(1, 2, 3).toListNode()
     println(a)
     println(b)
-
     println(mergeTwoLists(a, b))
-
 }

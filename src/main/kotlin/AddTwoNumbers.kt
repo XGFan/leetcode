@@ -84,6 +84,19 @@ class ListNode(var `val`: Int) {
 
 }
 
+
+fun Array<Int>.toListNode(): ListNode? {
+    if (this.isEmpty()) {
+        return null
+    }
+    val a = ListNode(this[0])
+    this.drop(1).map { ListNode(it) }.fold(a) { a, b ->
+        a.next = b
+        a.next!!
+    }
+    return a
+}
+
 fun main() {
     var p = ListNode(0)
     val listNode = p
