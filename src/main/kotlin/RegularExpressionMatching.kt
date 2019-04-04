@@ -125,3 +125,20 @@ fun match(p: List<MatchingChar>, pi: Int, s: String, si: Int): Boolean {
         }
     }
 }
+
+fun main() {
+    println(isMatch("aa", "a")) //false
+    println(isMatch("aa", "a*")) //true
+    println(isMatch("ab", ".*"))//true
+    println(isMatch("aab", "c*a*b"))//true
+    println(isMatch("mississippi", "mis*is*p*."))//false
+    println(isMatch("aaa", "a.a"))//true
+    println(isMatch("aaa", "a*a"))//true
+    println(isMatch("aaa", "ab*a*c*a"))//true
+    println(isMatch("a", "ab*"))//true
+    println(isMatch("a", ".*..a*"))//false
+    println(isMatch("ab", ".*.."))//true
+    println(isMatch("", ""))//true
+    println(isMatch("bbbaccbbbaababbac", ".b*b*.*...*.*c*."))//true
+
+}
