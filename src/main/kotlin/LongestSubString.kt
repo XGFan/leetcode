@@ -31,10 +31,10 @@ fun lengthOfLongestSubstring(s: String): Int {
 }
 
 fun main() {
-    println(lengthOfLongestSubstring("tmmzuxt"))
-    println(lengthOfLongestSubstring0("tmmzuxt"))
-    println(lengthOfLongestSubstring("museuwzbczdejn"))
-    println(lengthOfLongestSubstring0("museuwzbczdejn"))
+    println(lengthOfLongestSubstring("gabcdefgff"))
+//    println(lengthOfLongestSubstring0("tmmzuxt"))
+//    println(lengthOfLongestSubstring("museuwzbczdejn"))
+//    println(lengthOfLongestSubstring0("museuwzbczdejn"))
 //    museuwzbczdejn
 //    43768767654321
 }
