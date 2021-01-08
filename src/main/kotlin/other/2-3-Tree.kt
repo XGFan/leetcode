@@ -175,7 +175,6 @@ class Tree : Comparable<Tree> {
         this.addTree(tree, index)
     }
 
-
     private fun getIndexInChild(value: Int): Int {
         var index: Int = this.v.size - 1
         while (index >= 0) {
@@ -188,7 +187,6 @@ class Tree : Comparable<Tree> {
         return index + 1
     }
 
-
     fun autoCombine(tree: Tree) {
         this.v.addAll(tree.v)
         this.v.sort()
@@ -198,7 +196,6 @@ class Tree : Comparable<Tree> {
         }
         this.c.sort()
     }
-
 
     fun addTree(tree: Tree, childIndex: Int = -1) {
         when (tree.type) {
@@ -257,7 +254,6 @@ class Tree : Comparable<Tree> {
     fun add(value: Int) {
         this.addTree(Tree((value)))
     }
-
 
     fun remove(value: Int): Boolean {
         val childIndex = getIndexInChild(value)
@@ -418,7 +414,6 @@ class Tree : Comparable<Tree> {
             this.c[0].minTreeNode()
         }
     }
-
 
     fun values(): List<Int> {
         return if (this.c.isEmpty()) {
