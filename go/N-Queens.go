@@ -7,16 +7,18 @@ func solveNQueens(n int) [][]string {
 	bytes := make([]byte, n)
 	st := make([]string, n)
 	for i := 1; i <= n; i++ {
-		bytes[i-1] = '.'
+		bytes[i-1] = '.' //默认全部是.
 		queens[i-1] = int64(1)<<(62-n+i) | int64(i)
 	}
+	//这个循环是第一次尝试
 	for i := 0; i < n; i++ {
 		bytes[i] = 'Q'
-		st[i] = string(bytes)
+		st[i] = string(bytes) //这儿是一个模板
 		bytes[i] = '.'
 	}
+	//测试剩下的可能性
 	for index := 1; index < n; index++ {
-		barrier := len(queens)
+		barrier := len(queens)     //现在的queens都是上一轮的结果
 		for _, p := range queens { //之前的结果
 		try:
 			for i := 1; i <= n; i++ { //当前尝试
@@ -29,9 +31,11 @@ func solveNQueens(n int) [][]string {
 						continue try
 					}
 				}
+				//把这轮的结果加到queens
 				queens = append(queens, p|(int64(i)<<(index*4))|int64(1)<<(62-n+i))
 			}
 		}
+		//根据barrier，把更早的去掉
 		for i := 0; i < barrier; i++ {
 			queens[i] = queens[len(queens)-1-i]
 		}
@@ -219,7 +223,7 @@ func main() {
 	//loc := (p & (0xF << (j * 4))) >> (j * 4)
 	//fmt.Println(loc)
 	//111111
-	result := solveNQueens(8)
+	result := solveNQueens(2)
 	fmt.Printf("%v\n", result)
 	fmt.Printf("%v\n", len(result))
 	//fmt.Println(63 & 0xF)
