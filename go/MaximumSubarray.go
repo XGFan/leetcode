@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+//TODO: Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 func maxSubArray(nums []int) int {
 	sum := nums[0]
 	max := nums[0]
