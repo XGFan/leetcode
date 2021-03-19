@@ -12,73 +12,45 @@ func isNumber(s string) bool {
 	bytes := []byte(s)
 	last := -1
 	hasE := false
+	lastIndex := len(bytes) - 1
 	for i, b := range bytes {
 		switch b {
 		case 'E', 'e':
-			if hasE || i == 0 || i == len(bytes)-1 {
+			if hasE || i == 0 || i == lastIndex || last == 4 || last == 0 {
 				return false
 			} else {
-				if last == 4 || last == 0 {
-					return false
-				}
 				hasE = true
 				last = 3
 			}
 		case '+', '-':
-			if last != -1 {
-				if last != 3 {
-					return false
-				}
+			switch last {
+			case -1, 3:
 				last = 0
-			} else {
-				last = 0
+			default:
+				return false
 			}
 		case '.':
-			if last != -1 {
-				if hasE {
-					return false
-				}
-				if last == 0 { //正负号
-					if i == len(bytes)-1 {
-						return false
-					} else {
-						last = 4
-						continue
-					}
-				}
-				if last == 1 { //之前是整数
-					last = 2
-					continue
-				}
-				if last == 2 || last == 4 { //之前是浮点或者小数点
-					return false
-				}
-			}
-			if i == len(bytes)-1 {
+			if hasE {
 				return false
-			} else {
-				last = 4
+			}
+			switch last {
+			case -1, 0:
+				if i == lastIndex {
+					return false
+				} else {
+					last = 4
+				}
+			case 1:
+				last = 2
+			case 2, 4:
+				return false
 			}
 		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-			//number
-			if last != -1 {
-				if last == 0 {
-					last = 1
-					continue
-				}
-				if last == 1 || last == 2 { //整数或者浮点
-					continue
-				}
-				if last == 3 {
-					last = 1
-					continue
-				}
-				if last == 4 {
-					last = 2
-					continue
-				}
-			} else {
+			switch last {
+			case -1, 0, 3:
 				last = 1
+			case 4:
+				last = 2
 			}
 		default:
 			return false
