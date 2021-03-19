@@ -1,4 +1,4 @@
-package com.xulog.algo.util;
+package other;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
