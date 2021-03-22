@@ -27,7 +27,7 @@ func (p *ListNode) String() string {
 	}
 }
 
-func len(head *ListNode) int {
+func length(head *ListNode) int {
 	if head == nil {
 		return 0
 	}
@@ -39,7 +39,7 @@ func len(head *ListNode) int {
 }
 
 func rotateRight(head *ListNode, k int) *ListNode {
-	l := len(head)
+	l := length(head)
 	if l == 0 {
 		return nil
 	}
