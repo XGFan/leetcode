@@ -7,6 +7,8 @@ func uniquePaths(m int, n int) int {
 		m, n = n, m
 	}
 	c := 1
+	//Find the Number of Possibilities 9 choose 3
+	//aCb = a!/b!(a-b)!
 	for i := m + n - 2; i > 0; i-- {
 		if i >= n {
 			c *= i
