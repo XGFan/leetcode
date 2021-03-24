@@ -6,26 +6,24 @@ func minDistance(word1 string, word2 string) int {
 	if len(word1)*len(word2) == 0 {
 		return len(word1) + len(word2)
 	}
-	cache := make([][]int, len(word1)+1)
-	for i := range cache {
-		cache[i] = make([]int, len(word2)+1)
-	}
-	for x := range cache {
-		for y := range cache[x] {
+	cache := make([]int, len(word2)+1)
+	t := 0
+	for x := 0; x <= len(word1); x++ {
+		for y := range cache {
 			if x == 0 {
-				cache[x][y] = y
+				cache[y], t = y, cache[y]
 			} else if y == 0 {
-				cache[x][y] = x
+				cache[y], t = x, cache[y]
 			} else {
 				if word1[x-1] == word2[y-1] {
-					cache[x][y] = min(cache[x][y-1]+1, cache[x-1][y]+1, cache[x-1][y-1])
+					cache[y], t = min(cache[y-1]+1, cache[y]+1, t), cache[y]
 				} else {
-					cache[x][y] = min(cache[x][y-1]+1, cache[x-1][y]+1, cache[x-1][y-1]+1)
+					cache[y], t = min(cache[y-1]+1, cache[y]+1, t+1), cache[y]
 				}
 			}
 		}
 	}
-	return cache[len(word1)][len(word2)]
+	return cache[len(word2)]
 }
 
 func min(a, b, c int) int {
@@ -45,10 +43,7 @@ func min(a, b, c int) int {
 }
 
 func main() {
-	fmt.Println(minDistance("intention", "execution"))
-	fmt.Println(minDistance("horse", "ros"))
-	fmt.Println(minDistance("a", "a"))
+	fmt.Println(minDistance("intention", "execution") - 5)
+	fmt.Println(minDistance("horse", "ros") - 3)
+	fmt.Println(minDistance("a", "a") - 0)
 }
-
-//intention
-//execution
