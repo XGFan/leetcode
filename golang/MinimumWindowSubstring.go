@@ -13,29 +13,38 @@ func minWindow(s string, t string) string {
 			indexes = append(indexes, i)
 		}
 	}
-	var li, ri int
 	var result string
 loop:
-	for ri < len(indexes) && li < len(indexes) {
+	for li, ri := 0, 0; ri < len(indexes) && li < len(indexes); ri++ {
 		try[s[indexes[ri]]]--
-		for _, v := range try {
-			if v > 0 {
-				ri++
-				continue loop
+		if li == 0 {
+			for _, v := range try {
+				if v > 0 {
+					continue loop
+				}
 			}
+			//fmt.Println("first", indexes[li], indexes[ri], try[s[indexes[ri]]])
+		} else {
+			if try[s[indexes[ri]]] != 0 {
+				continue
+			}
+			//fmt.Println("other", indexes[li], indexes[ri], try[s[indexes[ri]]])
 		}
 		//li向左移动，直到不满足条件
-		for li < ri && try[s[indexes[li]]]+1 <= 0 {
+		for {
 			try[s[indexes[li]]]++
-			li++
+			if li > ri || try[s[indexes[li]]] > 0 {
+				break
+			} else {
+				li++
+			}
 		}
+		//fmt.Println("finally", indexes[li], indexes[ri], try[s[indexes[ri]]])
 		if result == "" || len(result) > indexes[ri]+1-indexes[li] {
 			result = s[indexes[li] : indexes[ri]+1]
 		}
-		//fmt.Println(s[l : r+1])
-		try[s[indexes[li]]]++
-		try[s[indexes[ri]]]++
 		li++
+		//fmt.Println(result)
 	}
 	return result
 }
@@ -45,4 +54,5 @@ func main() {
 	fmt.Println(minWindow("a", "a"))
 	fmt.Println(minWindow("wgrgserthsbv", "a"))
 	fmt.Println(minWindow("aa", "aa"))
+	fmt.Println(minWindow("cabefgecdaecf", "cae"))
 }
