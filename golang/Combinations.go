@@ -3,12 +3,10 @@ package main
 import "fmt"
 
 func g2(prefix []int, from, to, n int, result *[][]int) {
-	if n == 1 {
-		for i := from; i <= to; i++ {
-			ints := make([]int, len(prefix)+1)
-			copy(ints, append(prefix, i))
-			*result = append(*result, ints)
-		}
+	if n == 0 {
+		ints := make([]int, len(prefix))
+		copy(ints, append(prefix))
+		*result = append(*result, ints)
 	} else {
 		for i := from; i <= to; i++ {
 			g2(append(prefix, i), i+1, to, n-1, result)
@@ -18,7 +16,8 @@ func g2(prefix []int, from, to, n int, result *[][]int) {
 
 func combine(n int, k int) [][]int {
 	res := make([][]int, 0, c(n, k))
-	g2([]int{}, 1, n, k, &res)
+	ints := make([]int, 0, k)
+	g2(ints, 1, n, k, &res)
 	return res
 }
 
@@ -46,4 +45,5 @@ func main() {
 	//fmt.Println(c(7, 3))
 	//fmt.Println(combine(4, 2))
 	fmt.Println(combine(5, 4))
+	fmt.Println(combine(7, 4))
 }
