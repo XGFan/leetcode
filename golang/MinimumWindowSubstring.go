@@ -3,42 +3,38 @@ package main
 import "fmt"
 
 func minWindow(s string, t string) string {
-	try := make(map[byte]int, len(t)/2)
-	for _, v := range []byte(t) {
-		try[v] += 1
+	try := [128]int{}
+	for _, v := range t {
+		try[v]++
 	}
-	indexes := make([]int, 0)
+	var indexes []int
 	for i := range s {
-		if _, ok := try[s[i]]; ok {
+		if try[s[i]] != 0 {
 			indexes = append(indexes, i)
 		}
 	}
-	li, ri := 0, 0
-	from, to := 0, 0
-	if len(indexes) == 0 {
-		return ""
-	}
-	l, r := indexes[li], indexes[ri]
-x:
+	var li, ri int
+	var result string
+loop:
 	for ri < len(indexes) && li < len(indexes) {
-		r = indexes[ri]
-		l = indexes[li]
+		r := indexes[ri]
+		l := indexes[li]
 		try[s[r]]--
 		for _, v := range try {
 			if v > 0 {
 				ri++
-				continue x
+				continue loop
 			}
 		}
-		if to == 0 || to-from > r+1-l {
-			from, to = l, r+1
+		if result == "" || len(result) > r+1-l {
+			result = s[l : r+1]
 		}
 		//fmt.Println(s[l : r+1])
 		try[s[l]]++
 		try[s[r]]++
 		li++
 	}
-	return s[from:to]
+	return result
 }
 
 func main() {
