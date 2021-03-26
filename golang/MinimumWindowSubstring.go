@@ -17,21 +17,19 @@ func minWindow(s string, t string) string {
 	var result string
 loop:
 	for ri < len(indexes) && li < len(indexes) {
-		r := indexes[ri]
-		l := indexes[li]
-		try[s[r]]--
+		try[s[indexes[ri]]]--
 		for _, v := range try {
 			if v > 0 {
 				ri++
 				continue loop
 			}
 		}
-		if result == "" || len(result) > r+1-l {
-			result = s[l : r+1]
+		if result == "" || len(result) > indexes[ri]+1-indexes[li] {
+			result = s[indexes[li] : indexes[ri]+1]
 		}
 		//fmt.Println(s[l : r+1])
-		try[s[l]]++
-		try[s[r]]++
+		try[s[indexes[li]]]++
+		try[s[indexes[ri]]]++
 		li++
 	}
 	return result
