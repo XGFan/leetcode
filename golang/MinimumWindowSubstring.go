@@ -24,6 +24,11 @@ loop:
 				continue loop
 			}
 		}
+		//li向左移动，直到不满足条件
+		for li < ri && try[s[indexes[li]]]+1 <= 0 {
+			try[s[indexes[li]]]++
+			li++
+		}
 		if result == "" || len(result) > indexes[ri]+1-indexes[li] {
 			result = s[indexes[li] : indexes[ri]+1]
 		}
