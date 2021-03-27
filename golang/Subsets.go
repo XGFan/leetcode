@@ -4,12 +4,11 @@ import "fmt"
 
 func g(res *[][]int, prefix, other []int) {
 	for i := range other {
-		ints := make([]int, len(prefix))
+		ints := make([]int, len(prefix)+1)
 		copy(ints, prefix)
-		ints = append(ints, other[i])
-		//fmt.Println("ADD", i, ints)
+		ints[len(ints)-1] = other[i]
 		*res = append(*res, ints)
-		g(res, append(prefix, other[i]), other[i+1:])
+		g(res, ints, other[i+1:])
 	}
 }
 
