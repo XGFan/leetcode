@@ -12,8 +12,7 @@ func g(res *[][]int, prefix, other []int) {
 }
 
 func subsets(nums []int) [][]int {
-	res := make([][]int, 0)
-	res = append(res, []int{})
+	res := make([][]int, 1, 1<<len(nums))
 	g(&res, []int{}, nums)
 	return res
 }
