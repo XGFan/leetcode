@@ -3,27 +3,32 @@ package main
 import "fmt"
 
 func numDecodings(s string) int {
-	if len(s) == 0 {
-		return 1
+	cache := make([]int, len(s)+1)
+	cache[len(s)] = 1
+	if s[len(s)-1] != '0' {
+		cache[len(s)-1] = 1
 	}
-	switch s[0] {
-	case '0':
-		return 0
-	case '1':
-		if len(s) > 1 {
-			return numDecodings(s[1:]) + numDecodings(s[2:])
-		} else {
-			return numDecodings(s[1:])
+	for i := len(s) - 2; i >= 0; i-- {
+		switch s[i] {
+		case '0':
+			cache[i] = 0
+		case '1':
+			if i < len(s)-1 {
+				cache[i] = cache[i+1] + cache[i+2]
+			} else {
+				cache[i] = cache[i+1]
+			}
+		case '2':
+			if i < len(s)-1 && s[i+1] <= '6' {
+				cache[i] = cache[i+1] + cache[i+2]
+			} else {
+				cache[i] = cache[i+1]
+			}
+		default:
+			cache[i] = cache[i+1]
 		}
-	case '2':
-		if len(s) > 1 && s[1] <= '6' {
-			return numDecodings(s[1:]) + numDecodings(s[2:])
-		} else {
-			return numDecodings(s[1:])
-		}
-	default:
-		return numDecodings(s[1:])
 	}
+	return cache[0]
 }
 
 func main() {
