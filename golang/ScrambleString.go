@@ -42,7 +42,7 @@ func mayEqual(s1, s2 string) bool {
 			}
 		}
 		if lc == 0 {
-			if mayEqual(s1[0:i], s2[0:i]) && mayEqual(s1[i:], s2[i:]) {
+			if mayEqual(s1[:i], s2[:i]) && mayEqual(s1[i:], s2[i:]) {
 				return true
 			}
 		}
@@ -61,7 +61,7 @@ func mayEqual(s1, s2 string) bool {
 			}
 		}
 		if rc == 0 {
-			if mayEqual(s1[0:i], s2[len(s2)-i:]) && mayEqual(s1[i:], s2[0:len(s2)-i]) {
+			if mayEqual(s1[:i], s2[len(s2)-i:]) && mayEqual(s1[i:], s2[:len(s2)-i]) {
 				return true
 			}
 		}
