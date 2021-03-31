@@ -6,19 +6,21 @@ import "fmt"
 这个感觉是个数学题
 */
 func grayCode(n int) []int {
+	res := make([]int, 1<<n)
+	fillGradCode(res, n)
+	return res
+}
+
+func fillGradCode(res []int, n int) int {
 	if n == 1 {
-		return []int{0, 1}
+		res[0], res[1] = 0, 1
+		return 2
 	} else {
-		prev := grayCode(n - 1)
-		ints := make([]int, len(prev)*2)
-		for i := range ints {
-			if i < len(prev) {
-				ints[i] = prev[i]
-			} else {
-				ints[i] = 1<<(n-1) + ints[len(ints)-i-1]
-			}
+		l := fillGradCode(res, n-1)
+		for i := 0; i < l; i++ {
+			res[l+i] = l + res[l-1-i]
 		}
-		return ints
+		return 2 * l
 	}
 }
 
