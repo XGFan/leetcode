@@ -2,25 +2,16 @@ package main
 
 func partition(head *ListNode, x int) *ListNode {
 	tail := &ListNode{}
-	p := &ListNode{Next: tail}
-	res := p
+	prev := &ListNode{Next: tail}
+	res := prev
 	for head != nil {
 		if head.Val >= x {
-			tail.Next = head
-			head = head.Next
-			tail = tail.Next
-			tail.Next = nil
+			tail.Next, head, head.Next, tail = head, head.Next, tail.Next, head
 		} else {
-			t := head
-			head = head.Next
-			t.Next = p.Next
-			p.Next = t
-			p = p.Next
+			prev.Next, head, head.Next, prev = head, head.Next, prev.Next, head
 		}
 	}
-	if p.Next != nil {
-		p.Next = p.Next.Next
-	}
+	prev.Next = prev.Next.Next
 	return res.Next
 }
 
