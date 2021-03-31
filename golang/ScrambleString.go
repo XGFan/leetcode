@@ -6,50 +6,58 @@ func isScramble(s1 string, s2 string) bool {
 	if len(s1) != len(s2) {
 		return false
 	}
-	return mayEqual([]byte(s1), []byte(s2))
+	return mayEqual(s1, s2)
 }
 
-func mayEqual(s1, s2 []byte) bool {
-	for len(s1) != 0 && s1[0] == s2[0] {
-		s1 = s1[1:]
-		s2 = s2[1:]
-	}
-	if len(s1) == 0 {
+func mayEqual(s1, s2 string) bool {
+	if s1 == s2 {
 		return true
 	}
-	left := make([]int, 128)
-	right := make([]int, 128)
+	for i := range s1 {
+		if s1[i] != s2[i] {
+			s1 = s1[i:]
+			s2 = s2[i:]
+			break
+		}
+	}
+	left := make([]int, 26)
+	right := make([]int, 26)
 	lc, rc := 0, 0
 	for i := 1; i < len(s1); i++ {
-		if left[s1[i-1]] == 0 {
-			lc++
-		} else if left[s1[i-1]] == -1 {
-			lc--
+		v1 := s1[i-1] - 'a'
+		v21 := s2[i-1] - 'a'
+		v22 := s2[len(s2)-i] - 'a'
+		if v1 != v21 {
+			left[v1]++
+			left[v21]--
+			if left[v1] == 0 {
+				lc--
+			} else if left[v1] == 1 {
+				lc++
+			}
+			if left[v21] == 0 {
+				lc--
+			} else if left[v21] == -1 {
+				lc++
+			}
 		}
-		if right[s1[i-1]] == 0 {
-			rc++
-		} else if right[s1[i-1]] == -1 {
-			rc--
-		}
-		left[s1[i-1]]++
-		right[s1[i-1]]++
-
-		if left[s2[i-1]] == 0 {
-			lc++
-		} else if left[s2[i-1]] == 1 {
-			lc--
-		}
-		if right[s2[len(s2)-i]] == 0 {
-			rc++
-		} else if right[s2[len(s2)-i]] == 1 {
-			rc--
-		}
-		left[s2[i-1]]--
-		right[s2[len(s2)-i]]--
-
 		if lc == 0 {
 			if mayEqual(s1[0:i], s2[0:i]) && mayEqual(s1[i:], s2[i:]) {
 				return true
+			}
+		}
+		if v1 != v22 {
+			right[v1]++
+			right[v22]--
+			if right[v1] == 0 {
+				rc--
+			} else if right[v1] == 1 {
+				rc++
+			}
+			if right[v22] == 0 {
+				rc--
+			} else if right[v22] == -1 {
+				rc++
 			}
 		}
 		if rc == 0 {
