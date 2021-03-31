@@ -7,7 +7,16 @@ import "fmt"
 */
 func grayCode(n int) []int {
 	res := make([]int, 1<<n)
-	fillGradCode(res, n)
+	res[0], res[1] = 0, 1
+	x := 1 << 2
+	for i := 2; i < len(res); i++ {
+		if i < x {
+			res[i] = x/2 + res[x-1-i]
+		} else {
+			x <<= 1
+			i--
+		}
+	}
 	return res
 }
 
@@ -25,7 +34,10 @@ func fillGradCode(res []int, n int) int {
 }
 
 func main() {
-	fmt.Println(grayCode(1))
+	fmt.Println(1 << 0)
+	fmt.Println(1 << 1)
+	fmt.Println(1 << 2)
+	//fmt.Println(grayCode(1))
 	fmt.Println(grayCode(2))
 	fmt.Println(grayCode(3))
 }
