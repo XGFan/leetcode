@@ -15,7 +15,7 @@ func grayCode(n int) []int {
 			if i < len(prev) {
 				ints[i] = prev[i]
 			} else {
-				ints[i] = 1<<(n-1) + prev[len(ints)-i-1]
+				ints[i] = 1<<(n-1) + ints[len(ints)-i-1]
 			}
 		}
 		return ints
