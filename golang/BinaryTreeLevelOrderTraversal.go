@@ -8,22 +8,23 @@ func levelOrder(root *TreeNode) [][]int {
 	return res
 }
 func u2d(res *[][]int, nodes []*TreeNode) {
-	if len(nodes) == 0 {
+	size := len(nodes)
+	if size == 0 {
 		return
 	}
-	treeNodes := make([]*TreeNode, 0)
-	ints := make([]int, 0)
-	for _, v := range nodes {
+	ints := make([]int, 0, size)
+	for i := 0; i < size; i++ {
+		v := nodes[i]
 		ints = append(ints, v.Val)
 		if v.Left != nil {
-			treeNodes = append(treeNodes, v.Left)
+			nodes = append(nodes, v.Left)
 		}
 		if v.Right != nil {
-			treeNodes = append(treeNodes, v.Right)
+			nodes = append(nodes, v.Right)
 		}
 	}
 	*res = append(*res, ints)
-	u2d(res, treeNodes)
+	u2d(res, nodes[:copy(nodes, nodes[size:])])
 }
 
 func main() {
