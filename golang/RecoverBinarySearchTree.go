@@ -22,18 +22,18 @@ func recoverTree(root *TreeNode) {
 		}
 	}
 	//fmt.Println(m, n)
-	recover(root, m, n)
+	simpleRecover(root, m, n)
 }
 
-func recover(root *TreeNode, m, n int) {
+func simpleRecover(root *TreeNode, m, n int) {
 	if root != nil {
 		if root.Val == m {
 			root.Val = n
 		} else if root.Val == n {
 			root.Val = m
 		}
-		recover(root.Left, m, n)
-		recover(root.Right, m, n)
+		simpleRecover(root.Left, m, n)
+		simpleRecover(root.Right, m, n)
 	}
 }
 
