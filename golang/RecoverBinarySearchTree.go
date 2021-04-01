@@ -10,10 +10,19 @@ import "fmt"
 
 func recoverTree(root *TreeNode) {
 	i := -1 << 32
-	ints := []int{1 << 31, -1<<31 - 1}
-	treeToSlice(&ints, &i, root)
-	recover(root, ints[0], ints[1])
-	//fmt.Println(ints)
+	var ints []int
+	findTrouble(&ints, &i, root)
+	m, n := ints[0], ints[0]
+	for j := 1; j < len(ints); j++ {
+		if m < ints[j] {
+			m = ints[j]
+		}
+		if n > ints[j] {
+			n = ints[j]
+		}
+	}
+	//fmt.Println(m, n)
+	recover(root, m, n)
 }
 
 func recover(root *TreeNode, m, n int) {
@@ -28,21 +37,14 @@ func recover(root *TreeNode, m, n int) {
 	}
 }
 
-func treeToSlice(res *[]int, i *int, root *TreeNode) {
+func findTrouble(res *[]int, i *int, root *TreeNode) {
 	if root != nil {
-		treeToSlice(res, i, root.Left)
+		findTrouble(res, i, root.Left)
 		if *i > root.Val {
-			if (*res)[0] > root.Val {
-				(*res)[0] = root.Val
-			}
-			if (*res)[1] < *i {
-				(*res)[1] = *i
-			}
-			//*res = append(*res, *i, root.Val)
-			//fmt.Println(*i, root.Val)
+			*res = append(*res, root.Val, *i)
 		}
 		*i = root.Val
-		treeToSlice(res, i, root.Right)
+		findTrouble(res, i, root.Right)
 	}
 }
 
