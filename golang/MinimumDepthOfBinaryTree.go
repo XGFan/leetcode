@@ -4,21 +4,26 @@ func minDepth(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	if root.Left != nil && root.Right != nil {
-		l := minDepth(root.Left)
-		r := minDepth(root.Right)
-		if l < r {
-			return l + 1
-		} else {
-			return r + 1
+	n := 0
+	nodes := []*TreeNode{root}
+	for len(nodes) != 0 {
+		barrier := len(nodes)
+		for i := 0; i < barrier; i++ {
+			node := nodes[i]
+			if node.Left == nil && node.Right == nil {
+				return n + 1
+			} else if node.Left != nil && node.Right == nil {
+				nodes[i] = node.Left
+			} else if node.Right != nil && node.Left == nil {
+				nodes[i] = node.Right
+			} else {
+				nodes[i] = node.Left
+				nodes = append(nodes, node.Right)
+			}
 		}
-	} else {
-		if root.Left != nil {
-			return minDepth(root.Left) + 1
-		} else {
-			return minDepth(root.Right) + 1
-		}
+		n++
 	}
+	return n
 }
 
 func main() {
