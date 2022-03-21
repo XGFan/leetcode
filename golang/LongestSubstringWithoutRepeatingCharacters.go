@@ -4,11 +4,11 @@ import "fmt"
 
 func lengthOfLongestSubstring(s string) int {
 	m := make(map[rune]int)
-	latestRepeatFrom := 0
+	latestRepeatFrom := -1
 	maxLen := 0
 	for i, b := range s {
-		lastSeen := m[b]
-		if lastSeen > latestRepeatFrom {
+		lastSeen, exist := m[b]
+		if exist && lastSeen > latestRepeatFrom {
 			//该字符上一次出现，在最近一次重复（from...to）的from之后
 			//这样计算长度，就可以从lastSeen-now，只会包含一个to，不会包含from
 			latestRepeatFrom = lastSeen
@@ -20,7 +20,7 @@ func lengthOfLongestSubstring(s string) int {
 		if length > maxLen {
 			maxLen = length
 		}
-		m[b] = i + 1
+		m[b] = i
 	}
 	return maxLen
 }
